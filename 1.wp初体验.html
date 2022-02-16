@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>demo1</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="hello">i'm from browser</div>
+
+      <hello-hockor></hello-hockor>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script>
+      class HelloHockor extends HTMLElement {
+        constructor() {
+          super();
+          const shadow = this.attachShadow({
+            mode: "open",
+          });
+          const div = document.createElement("div");
+          div.className = "hello";
+          // 不会污染外界
+          const style = document.createElement("style");
+
+          style.innerHTML = `
+            .hello {
+              color: red;
+            }
+          `;
+          div.innerHTML = "hello hockor";
+          shadow.appendChild(div);
+          shadow.appendChild(style);
+        }
+      }
+
+      const tagName = "hello-hockor";
+      const isDefined = customElements.get(tagName);
+      if (!isDefined) {
+        customElements.define(tagName, HelloHockor);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>demo1</title>
+	<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0
+		}
+	</style>
+</head>
+<body>
+
+<div id="app">
+	<div class="hello">i'm from browser</div>
+
+	<!--这里还是要写标签哦-->
+	<hello-world></hello-world>
+
+	<!--模板部分-->
+	<template id="hello">
+		<style>
+			.hello {
+				color: red;
+			}
+		</style>
+		<div class="hello">hello world</div>
+	</template>
+
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+<script>
+  class HelloWorld extends HTMLElement {
+    constructor () {
+      super()
+      const shadow = this.attachShadow({
+        mode: 'open'
+      })
+      const div = document.getElementById('hello')
+
+      shadow.appendChild(div.content.cloneNode(true))
+    }
+  }
+
+  customElements.define('hello-world', HelloWorld)
+</script>
+</body>
+</html>
